@@ -1,0 +1,1 @@
+För att ladda ned Random Forest-modellen, vanligen hämta den på https://www.dropbox.com/scl/fi/jv8gjbakxndgolf23lj6w/random_forest_model_full_data.pkl?rlkey=lt1948c93gvo1ae8k3xqzz00d&st=9gs4amxw&dl=1 och lägg den i samma mapp som resten av appen.
