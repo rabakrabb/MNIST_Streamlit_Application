@@ -1,0 +1,8 @@
+streamlit
+numpy
+Pillow
+joblib
+opencv-python
+scikit-image
+requests
+streamlit-drawable-canvas
