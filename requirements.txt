@@ -1,0 +1,5 @@
+streamlit
+joblib
+opencv-python
+scikit-image
+streamlit-drawable-canvas
