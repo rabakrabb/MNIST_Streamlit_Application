@@ -10,33 +10,36 @@ import requests
 from io import BytesIO
 
 # Sätt upp sidan med titel, ikon och layout
-st.set_page_config(page_title="Handskriven sifferigenkänning", page_icon="🖋️", layout="centered")
+st.set_page_config(page_title="Handskriven sifferigenkänning", layout="centered")
+
 
 # Dropbox länk till din fil
-dropbox_link = "https://www.dropbox.com/scl/fi/jv8gjbakxndgolf23lj6w/random_forest_model_full_data.pkl?rlkey=lt1948c93gvo1ae8k3xqzz00d&st=wedisd3q&dl=1"
+# dropbox_link = "https://www.dropbox.com/scl/fi/jv8gjbakxndgolf23lj6w/random_forest_model_full_data.pkl?rlkey=lt1948c93gvo1ae8k3xqzz00d&st=wedisd3q&dl=1"
 
 # Ladda modellen från Dropbox
-def load_model_from_dropbox(dropbox_url):
-    try:
-        response = requests.get(dropbox_url, timeout=10)  # Timeout efter 10 sekunder
-        if response.status_code == 200:
-            st.write("Modellen laddades framgångsrikt från Dropbox!")
-            model = joblib.load(BytesIO(response.content))
-            return model
-        else:
-            st.error(f"Kunde inte ladda modellen. Statuskod: {response.status_code}")
-            return None
-    except requests.exceptions.RequestException as e:
-        st.error(f"Ett nätverksfel inträffade: {e}")
-        return None
+#def load_model_from_dropbox(dropbox_url):
+    #try:
+#        response = requests.get(dropbox_url, timeout=10)  # Timeout efter 10 sekunder
+ #       if response.status_code == 200:
+  #          st.write("Modellen laddades framgångsrikt från Dropbox!")
+   #         model = joblib.load(BytesIO(response.content))
+    #        return model
+     #   else:
+      #      st.error(f"Kunde inte ladda modellen. Statuskod: {response.status_code}")
+       #     return None
+    #except requests.exceptions.RequestException as e:
+     #   st.error(f"Ett nätverksfel inträffade: {e}")
+      #  return None
 
 
 # Kontrollera om modellen redan är laddad i session_state
-if 'rf_model' not in st.session_state:
-    with st.spinner('Laddar modellen från Dropbox...'):
-        st.session_state.rf_model = load_model_from_dropbox(dropbox_link)
+#if 'rf_model' not in st.session_state:
+ #   with st.spinner('Laddar modellen från Dropbox...'):
+  #      st.session_state.rf_model = load_model_from_dropbox(dropbox_link)
+#
+#rf = st.session_state.rf_model
 
-rf = st.session_state.rf_model
+rf = joblib.load('random_forest_model_full_data.pkl')
 
 def binarize_image(image_array):
     threshold_value = threshold_otsu(image_array)
@@ -73,7 +76,7 @@ def preprocess_for_prediction(image_array):
     # Centrera bilden
     image_array = center_digit(image_array)
     
-    # Applicera dilatation för att förbättra strukturen
+    # Dilatation för att förbättra strukturen
     image_array = dilation(image_array, footprint_rectangle((2, 2)))  # Tuple
     
     # Platta ut bilden och normalisera den
